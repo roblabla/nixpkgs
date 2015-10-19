@@ -154,7 +154,6 @@ in {
     services.redis.enable = mkDefault true;
     # We use postgres as the main data store.
     services.postgresql.enable = mkDefault true;
-    services.postgresql.package = mkDefault pkgs.postgresql;
     # Use postfix to send out mails.
     services.postfix.enable = mkDefault true;
 
