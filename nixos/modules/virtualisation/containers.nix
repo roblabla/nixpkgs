@@ -135,6 +135,16 @@ in
               '';
             };
 
+            capabilities = mkOption {
+              type = types.listOf types.string;
+              default = [];
+              example = [ "CAP_NET_ADMIN" ];
+              description = ''
+                The list of capabilities to be granted to the container.
+                See man capabilities.
+              '';
+            };
+
             autoStart = mkOption {
               type = types.bool;
               default = false;
@@ -235,6 +245,10 @@ in
 
             for iface in $INTERFACES; do
               extraFlags+=" --network-interface=$iface"
+            done
+
+            for capability in $CAPABILITIES; do
+              extraFlags+=" --capability=$capability"
             done
 
             for iface in $MACVLANS; do
@@ -351,6 +365,7 @@ in
               ''}
             ''}
              INTERFACES="${toString cfg.interfaces}"
+             CAPABILITIES="${toString cfg.capabilities}"
            ${optionalString cfg.autoStart ''
              AUTO_START=1
            ''}
