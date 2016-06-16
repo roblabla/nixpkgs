@@ -3,6 +3,7 @@
 with lib;
 
 let
+  strToArrEntry = v: "- \"${toString v}\"";
   cfg = config.services.matrix-synapse;
   logConfigFile = pkgs.writeText "log_config.yaml" cfg.logConfig;
   mkResource = r: ''{names: [${concatStringsSep "," r.names}], compress: ${if r.compress then "true" else "false"}}'';
@@ -86,6 +87,8 @@ perspectives:
     '') cfg.servers)}
     }
   }
+app_service_config_files:
+${concatStringsSep "\n" (map strToArrEntry cfg.app_service_config_files)}
 
 ${cfg.extraConfig}
 '';
@@ -476,6 +479,13 @@ in {
           Used to set the valid_until_ts in /key/v2 APIs.
           Determines how quickly servers will query to check which keys
           are still valid.
+        '';
+      };
+      app_service_config_files = mkOption {
+        type = types.listOf types.path;
+        default = [ ];
+        description = ''
+          The list of app service config files to load.
         '';
       };
       extraConfig = mkOption {
