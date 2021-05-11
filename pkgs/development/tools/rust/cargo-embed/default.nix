@@ -1,22 +1,22 @@
 { lib
-, rustPlatform, fetchFromGitHub
-, libusb1, pkg-config, rustfmt }:
+, rustPlatform, fetchCrate
+, libusb1, libftdi1, pkg-config, rustfmt }:
 
 rustPlatform.buildRustPackage rec {
   pname = "cargo-embed";
-  version = "0.8.0";
+  version = "0.10.1";
 
-  src = fetchFromGitHub {
-    owner = "probe-rs";
-    repo = pname;
-    rev = "v${version}";
-    sha256 = "0klkgl7c42vhqxj6svw26lcr7rccq89bl17jn3p751x6281zvr35";
+  src = fetchCrate {
+    inherit pname version;
+    sha256 = "1s6qwsqrr9y7hdpn23k2vcic19j4zbwisbxyp8bi7qc68329hf44";
   };
 
-  cargoSha256 = "0w21q2fpr077m8jr24ld3qjimwk1m4fy9dh14fq9nv5xd4f5s8n8";
+  cargoSha256 = "02bq3p8jml0wvfk5n4zks94fbz8ql0qqmc0qxf97kzj3gj6bdb7l";
 
   nativeBuildInputs = [ pkg-config rustfmt ];
-  buildInputs = [ libusb1 ];
+  buildInputs = [ libusb1 libftdi1 ];
+
+  cargoBuildFlags = [ "--features=ftdi" ];
 
   meta = with lib; {
     description = "A cargo extension for working with microcontrollers";
