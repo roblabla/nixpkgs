@@ -10788,6 +10788,10 @@ in {
 
   tflearn = callPackage ../development/python-modules/tflearn { };
 
+  tflite-runtime = callPackage ../development/python-modules/tflite-runtime {
+    inherit (pkgs) flatbuffers;
+  };
+
   tgcrypto = callPackage ../development/python-modules/tgcrypto { };
 
   theano-pymc = callPackage ../development/python-modules/theano-pymc { };
