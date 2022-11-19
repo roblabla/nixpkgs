@@ -12,7 +12,7 @@
 , autoPatchelfHook
 , icoutils
 , xcbuild
-, protobuf3_17
+, protobuf3
 , libredirect
 }:
 
@@ -43,7 +43,7 @@ let
     cat >>Ghidra/Debug/Debugger-gadp/build.gradle <<HERE
 protobuf {
   protoc {
-    path = '${protobuf3_17}/bin/protoc'
+    path = '${protobuf3}/bin/protoc'
   }
 }
 HERE
